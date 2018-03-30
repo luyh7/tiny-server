@@ -1,0 +1,21 @@
+.container{
+    height: 100%;
+}
+.input{
+    margin: auto;
+    margin-top: 20px;
+    width: 160px;
+}
+.text{
+    height: 70px;
+    font-size: 80px;
+    width: 100%;
+}
+.btn{
+    margin: auto;
+    margin-top: 20px;
+    width: 160px;
+}
+.btn-submit{
+    font-size: 40px;
+}

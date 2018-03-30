@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--手机适配-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <title>输入金额支付</title>
+    <link rel="stylesheet" href="consumerPay.css" type="text/css" />
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="consumerPay.js"></script>
+</head>
+<body onload="analyzeBrowser()">
+    <div class="container">
+        <form id="confirmPay">
+            <div class="input"><input class="text" type="text" name="money"></div>
+            <div class="btn"><input id="btn-pay" class="btn-submit" type="button" value="" onclick="doPay()"></div>
+        </form>
+    </div>
+</body>
+
+</html>
