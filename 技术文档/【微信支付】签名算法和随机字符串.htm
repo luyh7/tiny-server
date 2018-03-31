@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="keywords" content="公众号支付">
+<meta name="description" content="用户通过消息或扫描二维码在微信内打开商户的H5商城网站，调用微信支付完成下单购买">
+<title>【微信支付】公众号支付开发者文档</title>
+<script type="text/javascript">
+	var _speedMark=new Date();
+</script>
+<link rel="stylesheet" href="./【微信支付】签名算法_files/common.css">
+<script type="text/javascript" src="./【微信支付】签名算法_files/jquery-1.7.min.js"></script>
+</head>
+<body class="technology-integr">
+<!-- 头部 S -->
+<script>var _speedMark=Date.now()</script>
+<script>
+$(function(){
+    $(".showPopUpJS").mouseover(function(){ 
+		$(this).addClass("show-dropdown-body");
+	});
+	$(".showPopUpJS").mouseout(function(){
+		$(this).removeClass("show-dropdown-body");
+	});
+});
+</script>
+<div class="header">
+    <div class="wrap">
+        <div class="logo">
+            <h1 class="main-logo"><a href="https://pay.weixin.qq.com/wiki/doc/api/index.html" title="微信支付开发文档">微信支付开发文档</a></h1>
+            <div class="sub-logo np"></div>
+            
+        </div>
+        <div class="link">
+        	<a href="https://pay.weixin.qq.com/wiki/doc/api/index.html" target="_blank">开发文档首页</a>
+			<i class="vs">|</i>
+        	<a href="https://pay.weixin.qq.com/index.php" target="_blank">商户平台首页</a>
+        	<i class="vs">|</i>
+            <div class="dropdown-box showPopUpJS">
+                <a class="dropdown-head" href="javascript:;">帮助中心<span class="dropdown-arrow"></span></a>
+                <div class="dropdown-body">
+                    <ul>
+                        <li class="kefu">
+                            <p class="tel">客服：95017</p>
+                            <p class="time">周一到周五 09:00-18:00</p>
+                        </li>
+                        <li>
+                            <a href="http://kf.qq.com/product/wechatpaymentmerchant.html" target="_blank">自助服务专区</a>
+                        </li>
+                        <li class="last">
+                            <a href="http://kf.qq.com/product/wechatpaymentmerchant.html#hid=329" target="_blank">热点开发问题</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+<div class="query hide">
+	<div class="wrap tr">
+		<div class="postion"><!--a href="index.html">返回</a--></div>
+    </div>
+ </div><!-- 头部 E -->
+
+<!-- 内容 [[ -->
+<div class="container wrap">
+            <!-- 侧边栏 [[ -->
+            <div class="sidebar">
+                <div class="menu">
+                	<div class="menu-hd"><h3><i class="type-ico"></i>公众号支付</h3></div>
+                    <div class="munu-bd">
+                
+                    <!-- 交互说明
+                         1.给标签dl添加样式"open",显示下拉列表
+                         2.给标签dt或dd添加样式"on",显示选中状态
+                    -->
+                    <dl id="1">
+                        <dt><a href="javascript:;"><i class="ico-arrows"></i>文档说明</a></dt>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=1_1">阅读对象</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=1_2">版本说明</a></dd>
+                    </dl>
+                    <dl id="2">
+                        <dt><a href="javascript:;"><i class="ico-arrows"></i>术语</a></dt>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=2_1">支付模式</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=2_2">名词解释</a></dd>
+                    </dl>
+                    <dl id="3">
+                        <dt><a href="javascript:;"><i class="ico-arrows"></i>支付账户</a></dt>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=3_1">支付账户</a></dd>
+                    </dl>
+                    <dl id="4" class="open">
+                        <dt><a href="javascript:;"><i class="ico-arrows"></i>接口规则</a></dt>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_1">协议规则</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_2">参数规定</a></dd>
+                        <dd class="on"><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3">安全规范</a></dd>
+						<dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_4">获取openid</a></dd>
+                    </dl>
+                    <dl id="7">
+                        <dt><a href="javascript:;"><i class="ico-arrows"></i>公众号支付</a></dt>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_1">场景介绍</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_2">案例介绍</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_3">开发步骤</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_4">业务流程</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_5">获取微信版本号</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;index=6">微信内H5调起支付</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_8&amp;index=7">收货地址共享</a></dd>
+                    </dl>
+                    <dl id="9">
+                        <dt><a href="javascript:;"><i class="ico-arrows"></i>API列表</a></dt>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1">统一下单</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2">查询订单</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_3">关闭订单</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_4">申请退款</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5">查询退款</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_6">下载对账单</a></dd>
+						<dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_18&amp;index=7">下载资金账单</a></dd> 
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_7&amp;index=8">支付结果通知</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_8&amp;index=9">交易保障</a></dd>
+						<dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_16&amp;index=10">退款结果通知</a></dd>
+                        <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_17&amp;index=11">拉取订单评价数据</a></dd>                  
+                    </dl>
+                   <dl id="23">
+                <dt><a href="javascript:;"><i class="ico-arrows"></i>最佳实践</a></dt>
+                <dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=23_1">支付验收指引</a></dd>      
+				<dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=23_2">网络设置指引</a></dd>
+				<dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=23_3">最佳安全实践</a></dd>   
+            </dl>
+			<dl id="11" class="single">
+			<dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=11_1"><i class="ico-arrows"></i>SDK与DEMO下载</a></dd>
+			<dd><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=11_3&amp;index=2"><i class="ico-arrows"></i>联系我们 </a></dd>
+			</dl>
+            </div>
+            </div>
+            </div>
+            <!-- 侧边栏 ]] -->
+            <!-- 主区域 [[ -->
+            <div class="content" id="art-content">
+                <!-- 内容 [[ -->
+		            <div class="content-hd">
+    <h2 class="with-border">安全规范</h2>
+</div>       
+      
+<div class="content-bd">
+    <div class="marks-msg with-title mb20">
+    <h3><a name="1"></a>1、签名算法</h3>
+    <b><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=20_1">（签名校验工具）</a></b>
+    <p>签名生成的通用步骤如下： </p>
+    <p>第一步，设所有发送或者接收到的数据为集合M，将集合M内非空参数值的参数按照参数名ASCII码从小到大排序（字典序），使用URL键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串stringA。 </p>
+    <p>特别注意以下重要规则： </p>
+    <ol class="mb10">
+      <li>◆ 参数名ASCII码从小到大排序（字典序）； </li>
+      <li>◆ 如果参数的值为空不参与签名； </li>
+      <li>◆ 参数名区分大小写； </li>
+      <li>◆ 验证调用返回或微信主动通知签名时，传送的sign参数不参与签名，将生成的签名与该sign值作校验。 </li>
+      <li>◆ 微信接口可能增加字段，验证签名时必须支持增加的扩展字段 </li>
+    </ol>
+    <p>第二步，在stringA最后拼接上key得到stringSignTemp字符串，并对stringSignTemp进行MD5运算，再将得到的字符串所有字符转换为大写，得到sign值signValue。</p> 
+	<p>◆ key设置路径：微信商户平台(pay.weixin.qq.com)--&gt;账户设置--&gt;API安全--&gt;密钥设置</p>
+    <p>举例： </p>
+    <p class="mb10">假设传送的参数如下： </p>
+    <div class="guide-msg mb20">
+    <p>appid：		wxd930ea5d5a258f4f </p>
+    <p>mch_id：		10000100 </p>
+    <p>device_info：	1000 </p>
+    <p>body：		test </p>
+    <p>nonce_str：	ibuaiVcKdpRxkhJA </p>
+	</div>
+
+    <p>第一步：对参数按照key=value的格式，并按照参数名ASCII字典序排序如下： </p>
+    <div class="guide-msg mb20">
+    <p>stringA="appid=wxd930ea5d5a258f4f&amp;body=test&amp;device_info=1000&amp;mch_id=10000100&amp;nonce_str=ibuaiVcKdpRxkhJA"; </p>
+	</div>
+    <p class="mb10">第二步：拼接API密钥： </p>
+    <div class="guide-msg mb10">
+    <p>stringSignTemp=stringA+"&amp;key=192006250b4c09247ec02edce69f6a2d" <font face="宋体" color="#008000">//注：key为商户平台设置的密钥key</font> </p> 
+    <p>sign=MD5(stringSignTemp).toUpperCase()="9A0A8659F005D6984697E2CA0A9CF3B7" <font face="宋体" color="#008000">//注：MD5签名方式</font></p>
+	<p>sign=hash_hmac("sha256",stringSignTemp,key).toUpperCase()="6A9AE1657590FD6257D693A078E1C3E4BB6BA4DC30B23E0EE2496E54170DACD6"  <font face="宋体" color="#008000">//注：HMAC-SHA256签名方式</font></p>
+
+	</div>
+    <p class="mb10">最终得到最终发送的数据： </p>
+    <div class="guide-msg mb10">
+    <p>&lt;xml&gt; </p>
+    <p>&lt;appid&gt;wxd930ea5d5a258f4f&lt;/appid&gt; </p>
+    <p>&lt;mch_id&gt;10000100&lt;/mch_id&gt; </p>
+    <p>&lt;device_info&gt;1000&lt;/device_info&gt; </p>
+    <p>&lt;body&gt;test&lt;/body&gt; </p>
+    <p>&lt;nonce_str&gt;ibuaiVcKdpRxkhJA&lt;/nonce_str&gt; </p>
+    <p>&lt;sign&gt;9A0A8659F005D6984697E2CA0A9CF3B7&lt;/sign&gt; </p>
+    <p>&lt;/xml&gt; </p>
+    </div>
+    </div>
+    <div class="marks-msg with-title mb20">
+    <h3><a name="2"></a>2、生成随机数算法</h3>
+    <b></b>
+    <p>微信支付API接口协议中包含字段nonce_str，主要保证签名不可预测。我们推荐生成随机数算法如下：调用随机数函数生成，将得到的值转换为字符串。 </p>
+    </div>
+    <div class="marks-msg with-title mb20">
+    <h3><a name="3"></a>3、商户证书</h3>
+    <b></b>
+    <p>（1）获取商户证书</p>
+    <p>微信支付接口中，涉及资金回滚的接口会使用到商户证书，包括退款、撤销接口。商家在申请微信支付成功后，收到的相应邮件后，可以按照指引下载API证书，也可以按照以下路径下载：微信商户平台(pay.weixin.qq.com)--&gt;账户中心--&gt;账户设置--&gt;API安全--&gt;证书下载 。证书文件说明如下：</p>
+    <div class="table-wrp with-border">
+        <table class="table">
+      <tbody><tr>
+        <th width="22%">证书附件
+        </th><th width="25%">描述
+        </th><th width="23%">使用场景
+        </th><th width="30%">备注
+      </th></tr>
+      <tr>
+        <td>pkcs12格式<br>(apiclient_cert.p12、</td>
+        <td>包含了私钥信息的证书文件，为p12(pfx)格式，由微信支付签发给您用来标识和界定您的身份</td>
+        <td>撤销、退款申请API中调用</td>
+        <td>windows上可以直接双击导入系统，导入过程中会提示输入证书密码，证书密码默认为您的商户ID（如：10010000）</td>
+      </tr>
+    </tbody></table>
+    以下两个证书在PHP环境中使用：
+    <table class="table">
+    <tbody><tr>
+        <th width="22%">证书附件
+        </th><th width="25%">描述
+        </th><th width="23%">使用场景
+        </th><th width="30%">备注
+      </th></tr>
+      <tr>
+        <td>证书pem格式<br>（apiclient_cert.pem）</td>
+        <td>从apiclient_cert.p12中导出证书部分的文件，为pem格式，请妥善保管不要泄漏和被他人复制</td>
+        <td>PHP等不能直接使用p12文件，而需要使用pem，为了方便您使用，已为您直接提供</td>
+        <td>您也可以使用openssl命令来自己导出：openssl&nbsp;pkcs12&nbsp;-clcerts&nbsp;-nokeys&nbsp;-in&nbsp;apiclient_cert.p12&nbsp;-out&nbsp;apiclient_cert.pem</td>
+      </tr>
+      <tr>
+        <td>证书密钥pem格式<br>（apiclient_key.pem）</td>
+        <td>从apiclient_key.pem中导出密钥部分的文件，为pem格式</td>
+        <td>PHP等不能直接使用p12文件，而需要使用pem，为了方便您使用，已为您直接提供</td>
+        <td>您也可以使用openssl命令来自己导出：openssl&nbsp;pkcs12&nbsp;-nocerts&nbsp;-in&nbsp;apiclient_cert.p12&nbsp;-out&nbsp;apiclient_key.pem</td>
+      </tr>
+    </tbody></table>
+    </div>
+    <p>（2）使用商户证书</p>
+    <ul>
+      <li>◆ apiclient_cert.p12是商户证书文件，除PHP外的开发均使用此证书文件。 </li>
+      <li>◆ 商户如果使用.NET环境开发，请确认Framework版本大于2.0，必须在操作系统上双击安装证书apiclient_cert.p12后才能被正常调用。 </li>
+      <li>◆ 商户证书调用或安装需要使用到密码，该密码的值为微信商户号（mch_id）<br>
+    </li>
+      </ul>
+    <p>（3）商户证书安全</p>
+    <p>证书文件不能放在web服务器虚拟目录，应放在有访问权限控制的目录中，防止被他人下载。商户服务器要做好病毒和木马防护工作，不被非法侵入者窃取证书文件。 </p>
+    </div>
+    <div class="marks-msg with-title mb20">
+    <h3><a name="4"></a>4、商户回调API安全</h3>
+    <p>在普通的网络环境下，HTTP请求存在DNS劫持、运营商插入广告、数据被窃取，正常数据被修改等安全风险。商户回调接口使用HTTPS协议可以保证数据传输的安全性。所以微信支付建议商户提供给微信支付的各种回调采用HTTPS协议。请参考：<a target="_blank" href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=10_4">HTTPS搭建指南</a>。</p>
+    </div>
+</div>
+<!--[if !IE]>|xGv00|f66f88f783d5f815b3adb20822defaeb<![endif]-->					<script>
+					$(document).ready(function(){
+						$("dt").bind("click", function(){
+							//$("dl").removeClass("open");
+							if($(this).parent("dl").hasClass("open")) {
+							$(this).parent("dl").removeClass("open");}else{
+								 
+						  	$(this).parent("dl").addClass("open");}
+						});
+						var re = /\d{1,2}_\d{1,2}/g;
+						var x,y,z;
+						z ='';
+						if((x = re.exec(location.search)) !=null){
+							y = (''+x).split("_");
+							dl =$("dl#"+y[0]);
+							dl.addClass("open");
+							if(z == ''){
+								z = y[1]-1;
+							}else{
+								z--;
+							}
+							$(dl.children("dd")[z]).addClass("on");
+						}
+					});
+					</script>
+            	<!-- 内容 ]] -->
+        	</div>
+            <!-- 主区域 ]] -->
+
+</div>
+<!-- 内容 ]] -->
+
+<!-- 底部 [[ -->
+<!--<div class="footer">
+    <a href="http://help.tenpay.com/cgi-bin/helpcenter/help_center.cgi?id=1&amp;type=0" target="_blank">关于财付通</a>
+    <i class="vs">|</i>
+    <a href="mailto:weixinpay@tencent.com">联系邮箱</a>
+    <i class="vs">|</i>
+    <a href="../common/protocol.shtml" target="_blank">商户平台使用协议</a>
+    <i class="vs">|</i>
+    Powered By Tencent &amp; Tenpay　Copyright &copy; 2005-2016 All Rights Reserved.
+</div>-->
+<div class="page-right hide">
+    <div class="Catalog-box">
+
+        <div id="Catalog-box">
+        <dl style="display:none;"><dd class="cate-item1"><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3#1">1、签名算法</a></dd><dd class="cate-item1"><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3#2">2、生成随机数算法</a></dd><dd class="cate-item1"><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3#3">3、商户证书</a></dd><dd class="cate-item1"><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3#4">4、商户回调API安全</a></dd></dl></div>
+
+        <div class="complaints"><ul><li><a href="https://support.qq.com/products/14388" target="_blank">我要吐槽</a></li><li><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3#">返回顶部</a></li></ul></div>
+        </div>
+    </div>
+<div class="footer">
+    <div class="wrap">
+        <p><a target="_blank" href="http://kf.qq.com/faq/170117mABNnU170117uEFBVN.html">关于财付通</a><i class="vs">|</i><a target="_blank" href="https://pay.weixin.qq.com/index.php/core/home/pay_pact_v4"><span class="hide">微信支付</span>平台使用协议</a> <i class="vs">|</i><a href="https://pay.weixin.qq.com/index.php/public/apply_sign/protocol_v2" target="_blank">支付服务协议</a> <i class="vs">|</i><span>Powered By Tencent &amp; Tenpay　Copyright©2005-<script>
+var year="";
+mydate=new Date();
+myyear=mydate.getYear();
+year=(myyear > 200) ? myyear : 1900 + myyear;
+document.write(year);
+</script>2018 Tenpay All Rights Reserved.</span></p>
+    </div>
+</div>
+<script language="javascript" src="./【微信支付】签名算法_files/tcss.ping.https.js"></script>
+<script language="javascript">
+    if(typeof(pgvMain) == 'function')
+        pgvMain();
+</script>
+<script src="./【微信支付】签名算法_files/CateNav.js"></script>
+
+	<script type="text/javascript">
+	$(function(){
+		 $.CateNav('#art-content','#Catalog-box');//第一个参数为存放文章内容的box,第二个参数为存放生成目录的box
+		if(document.body.clientWidth<1300){$(".page-right").addClass("hide")}
+		
+	})
+	</script>
+<script>TA_STATS_ARGS={}</script>
+<script type="text/javascript" src="./【微信支付】签名算法_files/wechatpay.min.js" charset="UTF−8"></script>
+<!-- <script type="text/javascript" src="https://res.wx.qq.com/payactres/zh_CN/htmledition/js/lib/analysis/2.0/lib-min.js" charset="UTF−8" async="async" defer="defer"></script> --><!--[if !IE]>|xGv00|8c6de55f737761e28528e187007768de<![endif]--><!-- 底部 ]] -->
+
+
+</body></html>
