@@ -7,7 +7,7 @@
 //     document.getElementByIdx_x("confrimPay").submit();
 // }
 // }
-browserTable = ['Wechat', 'Alipay'];
+navigatePage = ['/wechatpay.html', '/alipay.html'];
 browserType = 0;
 buttonText = ['微信', '支付宝'];
 function getMessage()
@@ -28,6 +28,8 @@ function analyzeBrowser(){
     $(function(){
         $("#btn-pay").attr("value", buttonText[browserType] + "支付");
     });
+    window.location.href= 'http://' + window.location.host +  navigatePage[browserType];
+    $("#fuck").text(window.location.href);
 }
 function doPay(){
     msg = getMessage();

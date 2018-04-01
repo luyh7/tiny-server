@@ -4,6 +4,7 @@ const userlogin = require('./controller/userlogin.js');
 const confirmPay = require('./controller/confirmpay.js')
 const consumerPay = require('./controller/consumerpay.js')
 const doWXPay = require('./controller/dowxpay.js')
+const doAliPay = require('./controller/doalipay.js')
 const notifyMerchant = require('./controller/notifymerchant')
 // 创建一个 express 实
 const app = express();
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.post('/userlogin', userlogin.post);
 app.post('/confirmpay', confirmPay.post);
 app.post('/dowxpay', doWXPay.post);
+app.post('/doalipay', doAliPay.post);
 
 app.get('/consumerpay',consumerPay.get)
 app.get('/notifymerchant',notifyMerchant.get)

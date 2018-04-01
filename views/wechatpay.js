@@ -62,6 +62,7 @@ function getCode(){
     //必带参数，方便起见，这里选择拼在state后面
     data['state'] = '#wechat_redirect';
     $.ajax({
+        // 这些请求的url都要改成从config调用的方式
         url:"https://open.weixin.qq.com/connect/oauth2/authorize",
         method:"get",
         data:data,
