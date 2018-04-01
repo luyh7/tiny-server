@@ -1,12 +1,22 @@
 //request需要做一层封装，不然代码不够优雅
 var request = require('request')
+var path = require('path');
+var fs = require('fs');
+
 
 //本服务器域名，从config取
 const host = 'http://111.230.51.46:2333';
 
+var NodeRSA = require('node-rsa');
+
+var staticSign1 = "mPnqSwWH18lS8n8MNBYrI498D6855jHCMssGjU6uEZqP/CZdsW+HkXXP50eMmB3Cz/CL8flqeI6K6gpXRroxqGELBL25fObi2jnZmylrfdGQm4EGeQn9z2mL1dJdLvDpnmEqgCUPwDvKeEwERU0N0Znx4O0ylY+gyFHFWHFjQ5KmbWMsM2D0MSLFFKAO0On1nwzYJz56GNTlK+DwX67gA5VklflyT56/nBKOeE2LTka7tEX+W2T96EKwwK0pgk7Qb7DwbBamPvftlZD9NXj6LfdqnBsz8eizXhKulkSUGLpjYZEm0JUIZJTHeA2jf0+WEHCIBSTB9z7V993CrMX7yQ==";
+staticSign1 = new Buffer(staticSign1).toString('base64');
+const staticSign2 = '';
 //下单接口
 function post(req, res, next) {
+    console.log('doalipay: ' + req.toString());
     getUserid(req.body, res);
+    // next();
 }
 
 /**
@@ -29,19 +39,21 @@ function getUserid(body, res){
     data['code'] = body.code;
     // 默认
     data['grant_type'] = 'authorization_code';
+
     // 签名 放在最后
     data['sign'] = getSign(data);
-
-    var url = 'https://openapi.alipay.com/gateway.do';
+    // data['sign'] = staticSign1;
+    var url = 'https://openapi.alipaydev.com/gateway.do';
     url = formatUrl(url, data);
+    console.log("getUserIdUrl: " + url +'\n');
     //获取用户openid
     request.get(
         url, 
         function (error, response, body) {  
             if (!error && response.statusCode == 200) {
-                console.log(body);
+                console.log("res in getUserid" + body);
                 //支付宝下单
-                placeOrder(userPayInfo, body, res);
+                placeOrder(userPayInfo, JSON.parse(body), res);
             } else{
                 console.log('err in getUserid: ' +  error);
             }
@@ -66,20 +78,23 @@ function placeOrder(userPayInfo, body, res){
     // data['app_auth_token'] = body.access_token;
     var biz_content = {};
     // 商户订单号
-    biz_content['out_trade_no'] = '1234';
+    biz_content['out_trade_no'] = '0001';
     // 订单总金额，单位为元，精确到小数点后两位
     biz_content['total_amount'] = parseFloat(userPayInfo.total_fee) / 100;
     // 订单标题
-    biz_content['subject'] = '用户支付';
+    biz_content['subject'] = 'UserPay';
     // 支付的用户userid
-    biz_content['buyer_id'] = body.user_id;
+    console.log('\nbody: ' + body);
+    console.log('\nuser_id: ' + body.alipay_system_oauth_token_response);
+    biz_content['buyer_id'] = body.alipay_system_oauth_token_response.alipay_user_id;
 
     data['biz_content'] = formatBiz(biz_content);
 
     data['sign'] = getSign(data);
-    var url = '	https://openapi.alipay.com/gateway.do';
+    // data['sign'] = staticSign2;
+    var url = '	https://openapi.alipaydev.com/gateway.do';
     url = formatUrl(url, data);
-
+    console.log("placeOrderUrl: " + url +'\n');
     //更新数据库 todo
 
     //请求统一下单api
@@ -87,9 +102,9 @@ function placeOrder(userPayInfo, body, res){
         url, 
         function (error, response, body) {  
             if (!error && response.statusCode == 200) {
-                console.log(body);
+                console.log("res in placeOrder" + body);
                 // 下单完成之后通知前端
-                callbackClient(body, res);
+                callbackClient(JSON.parse(body), res);
             } else{
                 console.log('err in placeOrder: ' +  error);
             }
@@ -98,17 +113,18 @@ function placeOrder(userPayInfo, body, res){
 
 function callbackClient(body, res){
     //下单成功
-    if(body.code == '10000'){
-        data = {};
+    data = {};
+    ali_response = body.alipay_trade_create_response;
+    if(ali_response.code == '10000'){
         
         // 支付宝订单号，前端利用这个调起支付页面
-        data['trade_no'] = body.trade_no;
+        data['trade_no'] = ali_response.trade_no;
 
         //传给前端的成功标识，这个要用静态类封装 todo
         data['status'] = 'success';
 
         //验签失败，不能继续支付
-        if(!checkSign(body,sign)){
+        if(!checkSign(ali_response,body.sign)){
             data['status'] = 'fail';
         }
     }
@@ -135,6 +151,7 @@ function formatUrl(url, data){
         url += i + '=' +data[i] + '&';
     }
     url = url.substring(0, url.length - 1);
+    return url;
 }
 //获取随机字符串 这个可以考虑放在utils包下
 //参考微信官方文档
@@ -153,21 +170,30 @@ function getRandomString(){
     return ranstr;
 }
 //生成签名
-//参考微信官方文档
+//参考支付宝官方文档
 function getSign(data){
-    var key = '';
-    var str = '';
-    var dic = Object.keys(data).sort();
-    for(let i = 0; i < dic.length; i++){
-        str += (dic[i] + '=' +data[dic[i]] + '&');
+    try{
+        // var privatePem = fs.readFileSync('../config/rsa_private_key.pem');
+        var privatePem = fs.readFileSync(path.join(__dirname, '../config') + '/rsa_private_key.pem', 'utf8');
+        var key = privatePem.toString();
+        var prestr = '';
+        var dic = Object.keys(data).sort();
+        for(let i = 0; i < dic.length; i++){
+            prestr += (dic[i] + '=' +data[dic[i]] + '&');
+        }
+        //去掉多余字符
+        prestr = prestr.substring(0, prestr.length-1);
+
+        var crypto = require('crypto');
+        var sign = crypto.createSign('RSA-SHA256');
+        sign.update(prestr);
+        sign = sign.sign(key, 'base64');
+        return encodeURIComponent(sign);
+        console.log('\ndataUnsigned: ' +  prestr + '\n');
+        console.log('\nencrypted: ' +  encrypted + '\n');
+    }catch(err){
+        console.log("\ngetSign err: ", err);
     }
-    //去掉多余字符
-    str = str.substring(0, str.length-1);
-    
-    var md5 = require('md5');
-    var sign = string(md5(str)).toUpperCase();
-    //var sign = MD5(str).toUpperCase();
-    return sign;
 }
 
 //验证签名
@@ -183,10 +209,10 @@ function getTimeStamp(){
 
 function initData(){
     res = {};
-    res['appid'] = '2016091100484470';
-    res['return_url'] = encodeURIComponent(window.location.href);
+    res['app_id'] = '2016091100484470';
+    // res['return_url'] = encodeURIComponent(window.location.href);
     res['charset'] = 'utf-8';
-    res['sign_type'] = 'RSA';
+    res['sign_type'] = 'RSA2';
     // data['timestamp'] = getCurrentTime();
     res['timestamp'] = '2018-04-01 10:48:22';
     res['version'] = '1.0';

@@ -14,72 +14,56 @@ function onLoad(){
 function getCode(){
     data = {};
 
-    data['appid'] = '2016091100484470';
-    data['scope'] = 'auth_base';
-    data['redirect_uri'] = encodeURIComponent(window.location.href);
-    requestUrl = formatUrl('https://openauth.alipay.com/oauth2/publicAppAuthorize.htm',data)
-    $.get({
-        url: requestUrl,
-        // dataType: 'jsonp',
-        success: function (res) {
-            alert("success" + res);
-        },
-        fail: function (res) {
-            alert("fail: " + JSON.stringify(res))
-        },
-        error: function (res){
-            alert("err: " + JSON.stringify(res))
-        }
-    });
-    // initData(data);
-    // privateKey = 'MIICeQIBADANBgkqhkiG9w0BAQEFAASCAmMwggJfAgEAAoGBANeY5lsLmYONo2K85y08FvJMmZhaRpd9PffaEgNWtTh+/+LC0YFX3XEBhBVN+Op2YxmOj7IeDs+IShI6vYANvBHlEF7PkFpDf6NJJN/nKLpg0JpALozSTu8QjxPNj6jw4Ck3v6evQlAkU6JV38wbBcMhlIcg7YWKOkpdEX8uC9l7AgMBAAECgYEAzZwXC/srA2f/yrmG6v/kjl15Ge/2ZKDfiVEiXqbBm0ia9oJ/VRAbspsUgVDkM46GAiiQZ/j8fPVoVqxIbygqE1K7jbmL5xXZyhtvomSdP4CSRAxEo4HYgKyIg2/c61vd9M26JZOeTFYCEroORYqYa+N5/0CG3exJePU/NZHQ7+ECQQDrbheDyTlmfEU71JLwOEUCPn4Tq8hT/tKJxX1J7tNAOBJ10/qB+cu4rQ7HyonkH5Hio7+/mxfaOcK0dlAnKYhxAkEA6m80VNf7BaIPeYRcVN9xiEKWy7eLaiHZjcIKDP3943DYItSjwuRSnNlw12iRSG0EKY5e+xhc1x3bFfRk1tQWqwJBAMjL5RJplaNrakFVVN29oF4BntZ4NSwusrL+1ZUxNMwZBuWoHois3KxuLaUJggInSu3aa7ioNvfRO9de8Y31RoECQQCbxQxGm8QFeCtEGPioxFdRrL0521ldSeSeVqILA/Fg4KgcbKHra36hDbH2z1pJf3ZWjmz59rQpk4LxUZR3UjFFAkEAtSvIND9TEia5QKvLpWK/DUxLT/MMqp2QpZWilbOr+4KGpOWp7ZKzIuTZtzLJxI+qiJ7R2QbaeUMSxf8vo/HH9Q==';
-    // data['biz_content'] = "{\"scopes\":[\"auth_base\"],\"state\":\"fuck\",\"is_mobile\":\"true\"}";
-    // // data['sign'] = RSA1(privateKey, data);
-    // data['sign'] = 'fuck';
-    // reqestUrl = formatUrl('https://openapi.alipaydev.com/gateway.do',data)
-    // alert(reqestUrl)
+    data['app_id'] = '2016091100484470';
+    data['scope'] = 'auth_base';    
+    data['redirect_uri'] = (window.location.href);
+    requestUrl = formatUrl('https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm',data)
+    
+    // requestUrl = 'https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm?app_id=2016091100484470&scope=auth_base&redirect_uri=http://111.230.51.46:2333/alipay.html';
+
     // $.get({
-    //         url: reqestUrl,
-    //         dataType: 'jsonp',
-    //         success: function (res) {
-    //             alert("success" + res);
-    //         },
-    //         fail: function (res) {
-    //             alert("fail: " + JSON.stringify(res))
-    //         },
-    //         error: function (res){
-    //             alert("err: " + JSON.stringify(res))
-    //         }
+    //     url: requestUrl,
+    //     // dataType: 'jsonp',
+    //     success: function (res) {
+    //         alert("success" + res);
+    //     },
+    //     fail: function (res) {
+    //         alert("fail: " + JSON.stringify(res))
+    //     },
+    //     error: function (res){
+    //         alert("err: " + JSON.stringify(res))
+    //     }
     // });
+    window.location.href = requestUrl;
 }
 
 function doPay(){
-    money = $('#confirmPay').serialize();
+    formData = $('#confirmPay').serializeArray();
     
     data = {};
     //支付金额，单位为分
-    data['total_fee'] = parseInt(money) * 100;
+    data['total_fee'] = parseInt(formData[0].value) * 100;
     //页面加载时返回的code，用于后台获取openid
     data['code'] = code;
     //todo 其他参数
-
+    
     //调用后台下单接口
     $.ajax({
-        url:"/doalipay",
+        url:"http://111.230.51.46:2333/doalipay",
         method:"post",
         data:data,
-        dataType:"json",
+        // dataType:"json",
         success:function(res){
             // 下单成功后调起微信支付页面
             if(res.status == 'success'){
                 doAlipay(res);
             }
             else{
-                alert("下单失败: " + res);
+                alert("下单失败: " + res.status);
             }
         },
         error:function(res){
-             alert("通信失败: " + res);
+             alert("通信失败: " + JSON.stringify(res));
         }
     });
 }

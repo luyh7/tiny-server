@@ -34,7 +34,7 @@ app.get('/test', function(req, res) {
 
 // 实现唯一的一个中间件，对于所有请求，都输出 "Response from express"
 app.use((request, response, next) => {
-   
+   console.log("allreq: " + request);
     response.end();
 });
 
