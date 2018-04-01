@@ -3,33 +3,70 @@
 <head>
     <!-- <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />   -->
     <!--手机适配-->
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
     <title>输入金额支付</title>
-    <link rel="stylesheet" href="http://111.230.51.46:2333/consumerPay.css" type="text/css" />
-    <script src="http://111.230.51.46:2333/jquery-3.3.1.min.js"></script>
-    <script src="http://111.230.51.46:2333/consumerPay.js"></script>
+    <!-- <link rel="stylesheet" href="consumerPay.css" type="text/css" /> -->
+    <!-- <script type="text/javascript" src="jquery-3.3.1.min.js"></script> -->
+    <!-- <script src="http://111.230.51.46:2333/consumerPay.js"></script> -->
+    <!-- <script type="text/javascript" src="config.js"></script> -->
 </head>
 <body >
-    <div class="container">
+    <!-- <div class="container">
         <form id="confirmPay">
             <div class="input"><input class="text" type="text" name="money"></div>
             <div class="btn"><input id="btn-pay" class="btn-submit" type="button" value="" onclick="doPay()"></div>
         </form>
     </div>
-    <div><p id="fuck">fuck10</p></div>
+    <div><p id="fuck">fuck10</p></div> -->
 </body>
 <script>
-function onReady(fn){
-    var readyState = document.readyState;
-    if(readyState === 'interactive' || readyState === 'complete') {
-    fn()
-}else{
-    window.addEventListener("DOMContentLoaded",fn);
+analyzeBrowser();
+function analyzeBrowser(){
+    const host = 'http://111.230.51.46:2333';
+    alert(host)
+    const DEBUG = {'LOCAL':0, 'TEST':1, 'RELEASE':2};
+    alert(DEBUG)
+    const debugFlag = DEBUG.TEST;
+
+    const aliAppid = (debugFlag > DEBUG.TEST)?'':'2016091100484470';
+    var alipayAuth = 'https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm?'+
+                    'app_id='+aliAppid+
+                    '&scope=auth_base'+
+                    '&redirect_uri='+host+'/alipay.html';
+    alert(alipayAuth)
+    const wxAppid = (debugFlag > DEBUG.TEST)?'':'wx9d5c367ebf3e3436';
+    const wechatAuth = 'https://open.weixin.qq.com/connect/oauth2/authorize'+
+                    'appid='+wxAppid+
+                    '&scope=snsapi_base'+
+                    '&response_type=code'+
+                    '&state='+
+                    'redirect_uri='+encodeURIComponent(host+'/wechatpay.html')+
+                    '#wechat_redirect';
+
+    const navigatePage = {'wechat': wechatAuth, 'alipay':alipayAuth};
+    
+    var nPage = '';
+    
+    if(getMessage().indexOf("Alipay") != -1){
+        nPage = navigatePage['alipay']
+    }
+    else{
+        nPage = navigatePage['wechat']
+    }
+    alert(nPage)
+    window.location.href= nPage;
 }
 
+function getMessage(){ 
+    txt = "\n浏览器代码名: " + navigator.appCodeName;
+    txt+= "\n浏览器名称: " + navigator.appName; 
+    txt+= "\n浏览器平台和版本: " + navigator.appVersion;
+    txt+= "\n是否开启cookie: " + navigator.cookieEnabled;
+    txt+= "\n操作系统平台: " + navigator.platform; 
+    txt+= "\nUser-agent头部值: " + navigator.userAgent; 
+    alert(txt);  
+    return txt;
 }
-
-onReady(analyzeBrowser);
 </script>
 </html>

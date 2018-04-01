@@ -5,6 +5,7 @@ function onLoad(){
     //TODO 获取code的方式有没有更加优雅的方法？
     //如果页面的url中没有code，那么就调用微信api静默获取code
     //然后重定向到当前页面，通过url获取code
+    alert(url);
     if(code == null || code == ''){
         getCode();
     }
