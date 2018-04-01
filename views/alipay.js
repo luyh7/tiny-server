@@ -19,7 +19,7 @@ function getCode(){
     data['redirect_uri'] = encodeURIComponent(window.location.href);
     requestUrl = formatUrl('https://openauth.alipay.com/oauth2/publicAppAuthorize.htm',data)
     $.get({
-        url: reqestUrl,
+        url: requestUrl,
         // dataType: 'jsonp',
         success: function (res) {
             alert("success" + res);
@@ -74,23 +74,24 @@ function doPay(){
             if(res.status == 'success'){
                 doAlipay(res);
             }
+            else{
+                alert("下单失败: " + res);
+            }
         },
-        error:function(data){
-            // alert(data);
+        error:function(res){
+             alert("通信失败: " + res);
         }
     });
 }
 
-function initData(data){
-    data['appid'] = '2016091100484470';
-    data['method'] = 'alipay.user.info.auth';
-    data['return_url'] = encodeURIComponent(window.location.href);
-    data['charset'] = 'utf-8';
-    data['sign_type'] = 'RSA';
-    // data['timestamp'] = getCurrentTime();
-    data['timestamp'] = '2018-03-31 23:14:33';
-    data['version'] = '1.0';
+function doAlipay(res){
+    AlipayJSBridge.call("tradePay", {
+        tradeNO: res.trade_no
+    }, function(result) {
+
+        });
 }
+
 
 function dicFormat(data){
 

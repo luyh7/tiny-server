@@ -8,7 +8,7 @@
 // }
 // }
 navigatePage = ['/wechatpay.html', '/alipay.html'];
-browserType = 0;
+browserType = 1;
 buttonText = ['微信', '支付宝'];
 function getMessage()
 { 
@@ -22,12 +22,14 @@ function getMessage()
     return txt;
 }
 function analyzeBrowser(){
+    $("#fuck").text(window.location.href);
     if(getMessage().indexOf("Alipay") != -1){
         browserType = 1;
     }
     $(function(){
         $("#btn-pay").attr("value", buttonText[browserType] + "支付");
     });
+    alert("navigatePage: " + navigatePage[browserType])
     window.location.href= 'http://' + window.location.host +  navigatePage[browserType];
     $("#fuck").text(window.location.href);
 }

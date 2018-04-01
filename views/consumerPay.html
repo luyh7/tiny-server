@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />   -->
     <!--手机适配-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"> -->
     <meta charset="UTF-8">
     <title>输入金额支付</title>
-    <link rel="stylesheet" href="consumerPay.css" type="text/css" />
-    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="consumerPay.js"></script>
+    <link rel="stylesheet" href="http://111.230.51.46:2333/consumerPay.css" type="text/css" />
+    <script src="http://111.230.51.46:2333/jquery-3.3.1.min.js"></script>
+    <script src="http://111.230.51.46:2333/consumerPay.js"></script>
 </head>
-<body onload="analyzeBrowser()">
+<body >
     <div class="container">
         <form id="confirmPay">
             <div class="input"><input class="text" type="text" name="money"></div>
@@ -18,5 +19,17 @@
     </div>
     <div><p id="fuck">fuck10</p></div>
 </body>
+<script>
+function onReady(fn){
+    var readyState = document.readyState;
+    if(readyState === 'interactive' || readyState === 'complete') {
+    fn()
+}else{
+    window.addEventListener("DOMContentLoaded",fn);
+}
 
+}
+
+onReady(analyzeBrowser);
+</script>
 </html>
