@@ -20,21 +20,6 @@ function getCode(){
     data['redirect_uri'] = (window.location.href);
     requestUrl = formatUrl('https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm',data)
     
-    // requestUrl = 'https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm?app_id=2016091100484470&scope=auth_base&redirect_uri=http://111.230.51.46:2333/alipay.html';
-
-    // $.get({
-    //     url: requestUrl,
-    //     // dataType: 'jsonp',
-    //     success: function (res) {
-    //         alert("success" + res);
-    //     },
-    //     fail: function (res) {
-    //         alert("fail: " + JSON.stringify(res))
-    //     },
-    //     error: function (res){
-    //         alert("err: " + JSON.stringify(res))
-    //     }
-    // });
     window.location.href = requestUrl;
 }
 

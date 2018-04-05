@@ -1,5 +1,5 @@
 
-
+const network = require('../utlis/network')
 //用户支付完成后回调此接口
 //从数据库取出订单数据进行比对
 //通知商户成功支付的消息
@@ -32,6 +32,8 @@ function get(req, res, next) {
         res.json(data);
 
         //这里放通知商户和更新数据库的代码
+        network.income++;
+
     }
     else if(body.result_code == 'FAIL'){
         console.log(body.return_msg);
